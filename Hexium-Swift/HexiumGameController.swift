@@ -34,7 +34,7 @@ class HexiumGameController: UIViewController {
         let vcWidth = view.bounds.size.width
         NSLog("Height is %d", vcHeight)
         
-        let testTile = PieceView(position: CGPoint(x: 250, y: 250), width: CGFloat(100), radius: CGFloat(20))
+        let testTile = PieceView(position: CGPoint(x: 150, y: 150), width: CGFloat(200), radius: CGFloat(20))
         view.addSubview(testTile)
         
         let test2Tile = TileView(position: CGPoint(x: 150, y: 150), radius: CGFloat(200))

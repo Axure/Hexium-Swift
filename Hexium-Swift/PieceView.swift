@@ -65,6 +65,40 @@ class PieceView : UIView {
         fatalError("NSCoding not supported")
     }
     
+    func degreeToRadian(a: CGFloat) -> CGFloat {
+        return  2 * (CGFloat)(M_PI) * a / 360
+    }
+    
+    func polygonVertices(number: Int, point: CGPoint, radius: CGFloat, angleOffSet: CGFloat = 0) -> [CGPoint] {
+        let angleShare = CGFloat(360 / number)
+        var angle = angleOffSet
+        var points = [CGPoint]()
+        println("Radius is \(radius)")
+        println("Angle share is \(angleShare)")
+        for i in 0..<number {
+            println("The \(i)th angle is \(angle)")
+            println("The cos is \(cos(degreeToRadian(angle)))")
+            points.append(CGPoint(x: point.x + radius * cos(degreeToRadian(angle)), y: point.y + radius * sin(degreeToRadian(angle))))
+            angle = angle + angleShare
+        }
+        println(points)
+        return points
+    }
+    
+    func drawPolygon(context: CGContextRef, x: CGFloat, y: CGFloat,
+        radius: CGFloat, sides: Int, color: UIColor) {
+            
+            let points = polygonVertices(sides, point: CGPoint(x: x, y: y), radius: radius)
+            
+            CGContextAddLines(context, points, Int(points.count))
+            
+            let cgcolor = color.CGColor
+            CGContextSetFillColorWithColor(context, cgcolor)
+            CGContextFillPath(context)
+            println("Polygon color is \(color)")
+            println("Context for the polygon is \(context)")
+    }
+    
     override func drawRect(rect: CGRect) {
         
 //        switch(side) {
@@ -131,14 +165,11 @@ class PieceView : UIView {
 //            addSubview(myLine_4)
 //            
 //        case Side.White:
-            let lineWidth : CGFloat = 5.0
-            var context = UIGraphicsGetCurrentContext()
-            CGContextSetLineWidth(context, lineWidth);
-            color.set()
-            CGContextAddArc(context, (frame.size.width)/2 - lineWidth/2, frame.size.height/2 - lineWidth/2, (frame.size.width - 10)/2 - lineWidth, 0.0, CGFloat(M_PI * 2.0), 1)
-            // Dig deeper into the layout design!
-            CGContextStrokePath(context)
-            
+        let angleOff = 0
+        let xOffSet = CGFloat(300)
+        var context = UIGraphicsGetCurrentContext()
+        drawPolygon(context, x: CGRectGetMidX(rect),y: CGRectGetMidY(rect), radius: CGRectGetWidth(rect)/2, sides: 6, color: color)
+        
             
 //        }
         
