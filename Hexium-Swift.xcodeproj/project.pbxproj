@@ -16,6 +16,7 @@
 		04289B8A1B1C76E900BAB4A1 /* PieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B891B1C76E900BAB4A1 /* PieceView.swift */; };
 		04289B901B1C77DD00BAB4A1 /* HexiumGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B8F1B1C77DD00BAB4A1 /* HexiumGameController.swift */; };
 		04289B921B1C797F00BAB4A1 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B911B1C797F00BAB4A1 /* BoardView.swift */; };
+		04289B941B1CB74800BAB4A1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B931B1CB74800BAB4A1 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		04289B891B1C76E900BAB4A1 /* PieceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieceView.swift; sourceTree = "<group>"; };
 		04289B8F1B1C77DD00BAB4A1 /* HexiumGameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexiumGameController.swift; sourceTree = "<group>"; };
 		04289B911B1C797F00BAB4A1 /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		04289B931B1CB74800BAB4A1 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				04289B6F1B1C755400BAB4A1 /* Images.xcassets */,
 				04289B711B1C755400BAB4A1 /* LaunchScreen.xib */,
 				04289B661B1C755400BAB4A1 /* Supporting Files */,
+				04289B931B1CB74800BAB4A1 /* Utils.swift */,
 			);
 			path = "Hexium-Swift";
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				04289B921B1C797F00BAB4A1 /* BoardView.swift in Sources */,
 				04289B691B1C755400BAB4A1 /* AppDelegate.swift in Sources */,
 				04289B901B1C77DD00BAB4A1 /* HexiumGameController.swift in Sources */,
+				04289B941B1CB74800BAB4A1 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

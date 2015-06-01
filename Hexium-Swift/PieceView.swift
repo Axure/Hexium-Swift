@@ -65,9 +65,7 @@ class PieceView : UIView {
         fatalError("NSCoding not supported")
     }
     
-    func degreeToRadian(a: CGFloat) -> CGFloat {
-        return  2 * (CGFloat)(M_PI) * a / 360
-    }
+    
     
     func polygonVertices(number: Int, point: CGPoint, radius: CGFloat, angleOffSet: CGFloat = 0) -> [CGPoint] {
         let angleShare = CGFloat(360 / number)
@@ -176,12 +174,13 @@ class PieceView : UIView {
         
     }
     
-    init (position : CGPoint, width : CGFloat, radius : CGFloat) {
+    init (position : CGPoint, width : CGFloat, radius : CGFloat, color: UIColor) {
         
         
 //        delegate = d;
 //        self.color = d.pieceColor(side)
-        self.color = UIColor.blackColor()
+//        self.color = UIColor.blackColor()
+        self.color = color
 //        self.side = side
         
         
