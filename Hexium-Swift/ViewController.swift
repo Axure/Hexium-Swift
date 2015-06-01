@@ -20,6 +20,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func startButtonPressed(sender: UIButton) {
+        let game = HexiumGameController(dimension: 3)
+        self.presentViewController(game, animated: true, completion: nil)
+    }
 
 }
 

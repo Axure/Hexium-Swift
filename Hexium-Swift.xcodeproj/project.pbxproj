@@ -13,6 +13,9 @@
 		04289B701B1C755400BAB4A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04289B6F1B1C755400BAB4A1 /* Images.xcassets */; };
 		04289B731B1C755400BAB4A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04289B711B1C755400BAB4A1 /* LaunchScreen.xib */; };
 		04289B7F1B1C755500BAB4A1 /* Hexium_SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B7E1B1C755500BAB4A1 /* Hexium_SwiftTests.swift */; };
+		04289B8A1B1C76E900BAB4A1 /* PieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B891B1C76E900BAB4A1 /* PieceView.swift */; };
+		04289B901B1C77DD00BAB4A1 /* HexiumGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B8F1B1C77DD00BAB4A1 /* HexiumGameController.swift */; };
+		04289B921B1C797F00BAB4A1 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B911B1C797F00BAB4A1 /* BoardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		04289B781B1C755500BAB4A1 /* Hexium-SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hexium-SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04289B7D1B1C755500BAB4A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04289B7E1B1C755500BAB4A1 /* Hexium_SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hexium_SwiftTests.swift; sourceTree = "<group>"; };
+		04289B891B1C76E900BAB4A1 /* PieceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieceView.swift; sourceTree = "<group>"; };
+		04289B8F1B1C77DD00BAB4A1 /* HexiumGameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexiumGameController.swift; sourceTree = "<group>"; };
+		04289B911B1C797F00BAB4A1 /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,9 @@
 		04289B651B1C755400BAB4A1 /* Hexium-Swift */ = {
 			isa = PBXGroup;
 			children = (
+				04289B8C1B1C77C100BAB4A1 /* Controller */,
+				04289B8B1B1C77B500BAB4A1 /* Model */,
+				04289B881B1C76E000BAB4A1 /* View */,
 				04289B681B1C755400BAB4A1 /* AppDelegate.swift */,
 				04289B6A1B1C755400BAB4A1 /* ViewController.swift */,
 				04289B6C1B1C755400BAB4A1 /* Main.storyboard */,
@@ -110,6 +119,30 @@
 				04289B7D1B1C755500BAB4A1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		04289B881B1C76E000BAB4A1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04289B891B1C76E900BAB4A1 /* PieceView.swift */,
+				04289B911B1C797F00BAB4A1 /* BoardView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		04289B8B1B1C77B500BAB4A1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		04289B8C1B1C77C100BAB4A1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				04289B8F1B1C77DD00BAB4A1 /* HexiumGameController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,7 +246,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				04289B6B1B1C755400BAB4A1 /* ViewController.swift in Sources */,
+				04289B8A1B1C76E900BAB4A1 /* PieceView.swift in Sources */,
+				04289B921B1C797F00BAB4A1 /* BoardView.swift in Sources */,
 				04289B691B1C755400BAB4A1 /* AppDelegate.swift in Sources */,
+				04289B901B1C77DD00BAB4A1 /* HexiumGameController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
