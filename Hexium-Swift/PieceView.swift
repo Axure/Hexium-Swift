@@ -57,7 +57,7 @@ class PieceView : UIView {
     // How to inherit from two different classes and choose the respective ones to run? In other words, how to merge to classes with an option to switch?
     var color : UIColor
 
-
+    // TODO: it is the circle that is not just in its context, not the hexagon... We need to find the principle behind it.
     
     
     
