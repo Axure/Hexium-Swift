@@ -72,19 +72,20 @@ class HexiumGameController: UIViewController {
                 x1 = x1 * CGFloat(2 * i) * size
                 
                 x2 = cos(degreeToRadian(CGFloat((b + 2) % 6) * 60))
-                x2 = x2 * CGFloat(a) * size
+                x2 = x2 * CGFloat(a) * size * 2
                 
                 y1 = sin(degreeToRadian(CGFloat(60 * b)))
                 y1 = y1 * CGFloat(2 * i) * size
                 
                 y2 = sin(degreeToRadian(CGFloat((b + 2) % 6) * 60))
-                y2 = y2 * CGFloat(a) * size
+                y2 = y2 * CGFloat(a) * size * 2
                 
                 position = CGPoint(x: x + x1 + x2, y: y + y1 + y2)
                 
-                color = UIColor( red: r / 256.0, green: g / 256.0, blue: bb / 256.0, alpha: CGFloat(1.0) )
+                color = UIColor( red: r / 256.0, green: g / 256.0, blue: (256.0 - bb) / 256.0, alpha: CGFloat(1.0) )
                 
-                newPiece = PieceView(position: position, width: size, radius: size, color: color)
+                let offset = CGFloat(30)
+                newPiece = PieceView(position: position, width: size, radius: size, color: color, offset: offset)
                 view.addSubview(newPiece)
                 
                 println("New piece is at \(position) with color \(color)")
