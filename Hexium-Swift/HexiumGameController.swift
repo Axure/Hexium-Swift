@@ -8,17 +8,17 @@
 
 import UIKit
 
-class HexiumGameController: UIViewController {
+class HexiumGameController: UIViewController, GameModelProtocol {
     var dimension: Int
-    var model: GameModel
+    var model: GameModel? // Use optional to resolve the problem that model must be initialized before super.init, but self must be used after super.init...
     var boardView: BoardView
-    
     
     init(dimension d: Int) {
         dimension = d
-        model = GameModel(dimension: d)
+
         boardView = BoardView(dimension: d, radius: 500)
         super.init(nibName: nil, bundle: nil)
+        model = GameModel(dimension: d, delegate: self)
         view.backgroundColor = UIColor.whiteColor()
         setupTapControls()
     }
@@ -63,6 +63,10 @@ class HexiumGameController: UIViewController {
     func sizeToCoordinate(radius: CGFloat, padding: CGFloat) -> (Int, Int) {
         
         return (0, 0)
+    }
+    
+    func placeAPiece(cor: (Int, Int)) {
+        
     }
     
     // Drag up, then modify the model.

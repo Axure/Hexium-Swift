@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func startButtonPressed(sender: UIButton) {
-        let game = HexiumGameController(dimension: 3)
+        let game = HexiumGameController(dimension: 6)
         self.presentViewController(game, animated: true, completion: nil)
     }
 

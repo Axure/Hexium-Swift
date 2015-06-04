@@ -14,6 +14,7 @@ protocol BoardViewProtocol {
 
 class BoardView: UIView, BoardViewProtocol { // The board view should wrap the piece view
     let dimension: Int
+    var coordinateTable = [Int: CGPoint]()
     
     init(dimension d: Int, radius r: CGFloat) {
         self.dimension = d
@@ -34,6 +35,33 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         y = 400
         var color: UIColor
         var position: CGPoint
+        
+        coordinateTable[hashPair((0, 0))] = CGPoint(x: x, y: y)
+        for i in 1...dimension {
+            b = -1
+            for j in 0...6 * i - 1 {
+                a = j % i
+                if (a == 0) {
+                    b++
+                }
+                x1 = cos(degreeToRadian(CGFloat(60 * b)))
+                x1 = x1 * CGFloat(2 * i) * size
+                
+                x2 = cos(degreeToRadian(CGFloat((b + 2) % 6) * 60))
+                x2 = x2 * CGFloat(a) * size * 2
+                
+                y1 = sin(degreeToRadian(CGFloat(60 * b)))
+                y1 = y1 * CGFloat(2 * i) * size
+                
+                y2 = sin(degreeToRadian(CGFloat((b + 2) % 6) * 60))
+                y2 = y2 * CGFloat(a) * size * 2
+                
+                position = CGPoint(x: x + x1 + x2, y: y + y1 + y2)
+                coordinateTable[hashPair((i, j))] = position
+            }
+        }
+
+        
         for i in 1...5 {
             b = -1
             if (i % 2 == 0) {
@@ -83,7 +111,6 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         
         
         for i in 1...5 {
-            b = -1
             if (i % 2 == 0) {
                 r = 0
                 g = 128
@@ -95,33 +122,18 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
             }
             
             for j in 0...6 * i - 1 {
-                a = j % i
-                if (a == 0) {
-                    b++
-                }
                 r = r + 128.0 / CGFloat(6 * i)
                 g = g + 128.0 / CGFloat(6 * i)
                 bb = bb + 128.0 / CGFloat(6 * i)
                 
-                x1 = cos(degreeToRadian(CGFloat(60 * b)))
-                x1 = x1 * CGFloat(2 * i) * size
-                
-                x2 = cos(degreeToRadian(CGFloat((b + 2) % 6) * 60))
-                x2 = x2 * CGFloat(a) * size * 2
-                
-                y1 = sin(degreeToRadian(CGFloat(60 * b)))
-                y1 = y1 * CGFloat(2 * i) * size
-                
-                y2 = sin(degreeToRadian(CGFloat((b + 2) % 6) * 60))
-                y2 = y2 * CGFloat(a) * size * 2
-                
-                position = CGPoint(x: x + x1 + x2, y: y + y1 + y2)
+                println("Coordinate is \(i), \(j)")
+                position = coordinateTable[hashPair(i, j)]!
                 
                 color = UIColor( red: r / 256.0, green: g / 256.0, blue: (256.0 - bb) / 256.0, alpha: CGFloat(1.0) )
                 
                 let offset = CGFloat(30)
                 newPiece = PieceView(position: position, width: size, radius: size, color: color, offset: offset)
-                newPiece.number = b
+                newPiece.number = 5
                 addSubview(newPiece)
                 
                 println("New piece is at \(position) with color \(color)")
@@ -149,7 +161,15 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
     }
     
     func placeAPiece(location: (x: Int, y: Int)) {
-        
+        var newPiece: PieceView
+        var size = CGFloat(20)
+        var color: UIColor
+        color = UIColor.greenColor()
+        let position = coordinateTable[hashPair(location)]
+        let offset = CGFloat(0)
+        newPiece = PieceView(position: position!, width: size, radius: size, color: color, offset: offset)
+        newPiece.number = 5
+        addSubview(newPiece)
     }
 
     required init(coder aDecoder: NSCoder) {
