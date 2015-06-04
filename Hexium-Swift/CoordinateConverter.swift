@@ -77,7 +77,7 @@ func _twoToHex(cor: (x: Int, y: Int)) -> (Int, Int) {
         switch y {
         case let ty where ty > 0:
             cX = 0 - x + y
-            cY = (2 * cX) + y
+            cY = (2 * cX) - x
         case let ty where ty < x:
             //                cX = (- x) + (x - y)
             cX = 0 - y
