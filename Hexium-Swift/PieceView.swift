@@ -60,7 +60,19 @@ class PieceView : UIView {
     var count: UILabel
     var number: Int {
         didSet {
+            println("The number is \(oldValue)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             self.count.text = "\(number)"
+            if number > 3 {
+                color = UIColor.redColor()
+            } else {
+                if (number == -1) {
+                    println("-1!!!!!!!!!!!!!!!!!")
+                    color = UIColor.blackColor()
+                } else {
+                    color = UIColor.greenColor()
+                }
+
+            }
         }
     }
 
@@ -131,6 +143,7 @@ class PieceView : UIView {
         
         self.count = UILabel(frame: labelFrame)
         self.number = number
+        println("The initialized number is \(self.number)^^^^^^^^^^^^^^^^^^^")
         
         super.init(frame: defaultFrame)
 //        super.init(frame: CGRectMake(position.x, position.y, width, width))
