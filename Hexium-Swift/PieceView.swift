@@ -57,6 +57,12 @@ class PieceView : UIView {
     // How to inherit from two different classes and choose the respective ones to run? In other words, how to merge to classes with an option to switch?
     var color : UIColor
     var offset: CGFloat
+    var count: UILabel
+    var number: Int {
+        didSet {
+            self.count.text = "\(number)"
+        }
+    }
 
     // TODO: it is the circle that is not just in its context, not the hexagon... We need to find the principle behind it.
     
@@ -116,12 +122,20 @@ class PieceView : UIView {
 //        self.side = side
         
         self.offset = offset
-        super.init(frame: CGRectMake(position.x - width, position.y - width, 2 * width, 2 * width))
+        
+        let defaultFrame = CGRectMake(position.x - width, position.y - width, 2 * width, 2 * width)
+        let labelFrame = CGRectMake(width / CGFloat(2), width / CGFloat(2), width, width)
+        
+        self.count = UILabel(frame: labelFrame)
+        self.number = 5
+
+        
+        super.init(frame: defaultFrame)
 //        super.init(frame: CGRectMake(position.x, position.y, width, width))
         
         // Maybe we need to write a class for the circle inherited from a rectangle and override the CGRectMake method?
         self.backgroundColor = UIColor.clearColor()
-        
+        self.addSubview(self.count)
         //        backgroundColor = delegate.pieceColor(side)
         println(backgroundColor)
         

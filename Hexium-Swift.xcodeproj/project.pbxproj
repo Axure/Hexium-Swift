@@ -17,6 +17,8 @@
 		04289B901B1C77DD00BAB4A1 /* HexiumGameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B8F1B1C77DD00BAB4A1 /* HexiumGameController.swift */; };
 		04289B921B1C797F00BAB4A1 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B911B1C797F00BAB4A1 /* BoardView.swift */; };
 		04289B941B1CB74800BAB4A1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04289B931B1CB74800BAB4A1 /* Utils.swift */; };
+		042D17B71B2055DF00761EDC /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042D17B61B2055DF00761EDC /* GameModel.swift */; };
+		042D17E31B2069BA00761EDC /* CoordinateConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042D17E21B2069BA00761EDC /* CoordinateConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		04289B8F1B1C77DD00BAB4A1 /* HexiumGameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexiumGameController.swift; sourceTree = "<group>"; };
 		04289B911B1C797F00BAB4A1 /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		04289B931B1CB74800BAB4A1 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		042D17B61B2055DF00761EDC /* GameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		042D17E21B2069BA00761EDC /* CoordinateConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 		04289B651B1C755400BAB4A1 /* Hexium-Swift */ = {
 			isa = PBXGroup;
 			children = (
+				042D17E11B2069AE00761EDC /* Utils */,
 				04289B8C1B1C77C100BAB4A1 /* Controller */,
 				04289B8B1B1C77B500BAB4A1 /* Model */,
 				04289B881B1C76E000BAB4A1 /* View */,
@@ -136,6 +141,7 @@
 		04289B8B1B1C77B500BAB4A1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				042D17B61B2055DF00761EDC /* GameModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -146,6 +152,14 @@
 				04289B8F1B1C77DD00BAB4A1 /* HexiumGameController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		042D17E11B2069AE00761EDC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				042D17E21B2069BA00761EDC /* CoordinateConverter.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +266,9 @@
 				04289B8A1B1C76E900BAB4A1 /* PieceView.swift in Sources */,
 				04289B921B1C797F00BAB4A1 /* BoardView.swift in Sources */,
 				04289B691B1C755400BAB4A1 /* AppDelegate.swift in Sources */,
+				042D17E31B2069BA00761EDC /* CoordinateConverter.swift in Sources */,
 				04289B901B1C77DD00BAB4A1 /* HexiumGameController.swift in Sources */,
+				042D17B71B2055DF00761EDC /* GameModel.swift in Sources */,
 				04289B941B1CB74800BAB4A1 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,6 +467,7 @@
 				04289B841B1C755500BAB4A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		04289B851B1C755500BAB4A1 /* Build configuration list for PBXNativeTarget "Hexium-SwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +476,7 @@
 				04289B871B1C755500BAB4A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

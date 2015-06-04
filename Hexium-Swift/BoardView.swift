@@ -12,6 +12,34 @@ protocol BoardViewProtocol {
 
 }
 
+class BoardView: UIView, BoardViewProtocol { // The board view should wrap the piece view
+    let dimension: Int
+    
+    init(dimension d: Int, radius r: CGFloat) {
+        self.dimension = d
+        
+        
+        
+        super.init(frame: CGRectMake(100, 100, 540, 540))
+        self.backgroundColor = UIColor.clearColor()
+        
+        
+        
+    }
+    
+    func dragAPiece(location: (x: Int, y: Int)) {
+        
+    }
+    
+    func placeAPiece(location: (x: Int, y: Int)) {
+        
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class TileView: UIView {
     var color: UIColor
     

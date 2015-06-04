@@ -16,6 +16,7 @@ class HexiumGameController: UIViewController {
         dimension = d
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = UIColor.whiteColor()
+        setupTapControls()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -29,10 +30,19 @@ class HexiumGameController: UIViewController {
         super.viewDidLoad()
     }
     
+    func setupTapControls() {
+        
+        
+        let tap = UITapGestureRecognizer(target: self, action: Selector("tap:"))
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
+    }
+    
     func setupGame() {
         let vcHeight = view.bounds.size.height
         let vcWidth = view.bounds.size.width
         NSLog("Height is %d", vcHeight)
+        
         
         let testTile = PieceView(position: CGPoint(x: 50, y: 50), width: CGFloat(200), radius: CGFloat(20), color: UIColor.redColor())
         view.addSubview(testTile)
@@ -86,6 +96,7 @@ class HexiumGameController: UIViewController {
                 
                 let offset = CGFloat(30)
                 newPiece = PieceView(position: position, width: size, radius: size, color: color, offset: offset)
+                newPiece.number = b
                 view.addSubview(newPiece)
                 
                 println("New piece is at \(position) with color \(color)")
@@ -97,5 +108,26 @@ class HexiumGameController: UIViewController {
         view.addSubview(test2Tile)
         
         
+    }
+    
+    func sizeToCoordinate(radius: CGFloat, padding: CGFloat) -> (Int, Int) {
+        
+        
+    }
+    
+    // Drag up, then modify the model.
+    // It should be wrapped in the delegate
+    // You should call the model to eliminate the hexagon...
+    
+    // Let the view controller move the view?
+    // Judge the type of the action
+    // Relative coordinate systems...
+    
+    @objc(tap:)
+    func tapCommand(r: UIGestureRecognizer!) {
+        let location = r.locationInView(view)
+        
+        println(location.x, location.y)
+        println("Up!")
     }
 }
