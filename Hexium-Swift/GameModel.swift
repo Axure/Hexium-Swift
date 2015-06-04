@@ -9,7 +9,8 @@
 import UIKit
 
 protocol GameModelProtocol: class {
-    
+    func placeAPiece(cor: (Int, Int), number n: Int)
+    func updateAPiece(cor: (Int, Int), number n: Int)
 }
 
 
@@ -33,7 +34,19 @@ class GameModel: NSObject {
         }
         self.coordinateConverter = CoordinateConverter(dimension: d)
         super.init()
+        randomStart()
         
+    }
+    
+    func randomStart() {
+        for i in 0...self.dimension {
+            for j in 0..<6 * i {
+                if (random() % 3 == 0) {
+                    placeAPiece((i, j))
+                }
+            }
+        }
+        // The initial setup can be done by first calculating then drawing once for better performance
     }
     
     func reauthModel() {
@@ -50,7 +63,9 @@ class GameModel: NSObject {
         hexagonBoard[hashPair(cor)] = 0
         increaseNear(cor)
         reauthCor(cor)
+        delegate.placeAPiece(cor, number: hexagonBoard[hashPair(cor)]!)
     }
+    
     
     func reauthCor(cor: (Int, Int)) {
 
@@ -59,7 +74,7 @@ class GameModel: NSObject {
             let nearCors = self.coordinateConverter.neighborIndex(cor) // get neighbors
             for neighbor in nearCors {
                 if ((hexagonBoard[hashPair(neighbor)]) != nil) { // if neighbor exists
-                    if (hexagonBoard[hashPair(neighbor)]! == -1) { // and is not empty
+                    if (hexagonBoard[hashPair(neighbor)]! != -1) { // and is not empty
                         hexagonBoard[hashPair(cor)]! += 1 // increase the count
                     }
                 }
@@ -73,6 +88,7 @@ class GameModel: NSObject {
         for neighbor in nearCors {
             if ((hexagonBoard[hashPair(neighbor)]) != nil && (hexagonBoard[hashPair(neighbor)]) != -1) { // If neighbor exists and is not empty
                 hexagonBoard[hashPair(neighbor)]! += 1
+                delegate.updateAPiece(neighbor, number: hexagonBoard[hashPair(neighbor)]!)
             }
 
         }
@@ -84,6 +100,7 @@ class GameModel: NSObject {
         for neighbor in nearCors {
             if ((hexagonBoard[hashPair(neighbor)]) != nil && (hexagonBoard[hashPair(neighbor)]) != -1) { // If neighbor exists and is not empty
                 hexagonBoard[hashPair(neighbor)]! -= 1
+                delegate.updateAPiece(neighbor, number: hexagonBoard[hashPair(neighbor)]!)
             }
         }
     }

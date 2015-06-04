@@ -112,7 +112,7 @@ class PieceView : UIView {
         drawPolygon(context, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: CGRectGetWidth(rect)/2, sides: 6, color: color, offset: offset) // x and y is the top-left corner
     }
     
-    init (position : CGPoint, width : CGFloat, radius : CGFloat, color: UIColor, offset: CGFloat = 0) {
+    init (position : CGPoint, width : CGFloat, radius : CGFloat, color: UIColor, offset: CGFloat = 0, number: Int) {
         
         
 //        delegate = d;
@@ -126,16 +126,20 @@ class PieceView : UIView {
         let defaultFrame = CGRectMake(position.x - width, position.y - width, 2 * width, 2 * width)
         let labelFrame = CGRectMake(width / CGFloat(2), width / CGFloat(2), width, width)
         
-        self.count = UILabel(frame: labelFrame)
-        self.number = 5
 
+        
+        
+        self.count = UILabel(frame: labelFrame)
+        self.number = number
         
         super.init(frame: defaultFrame)
 //        super.init(frame: CGRectMake(position.x, position.y, width, width))
-        
+        if (number != -1) {
+            self.addSubview(self.count)
+        }
         // Maybe we need to write a class for the circle inherited from a rectangle and override the CGRectMake method?
         self.backgroundColor = UIColor.clearColor()
-        self.addSubview(self.count)
+
         //        backgroundColor = delegate.pieceColor(side)
         println(backgroundColor)
         

@@ -48,7 +48,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         NSLog("Height is %d", vcHeight)
         
         
-        let testTile = PieceView(position: CGPoint(x: 50, y: 50), width: CGFloat(200), radius: CGFloat(20), color: UIColor.redColor())
+        let testTile = PieceView(position: CGPoint(x: 50, y: 50), width: CGFloat(200), radius: CGFloat(20), color: UIColor.redColor(), number: 5)
         view.addSubview(testTile)
         
 
@@ -58,6 +58,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     
     func initView() {
         view.addSubview(boardView)
+        var number: Int
     }
     
     func sizeToCoordinate(radius: CGFloat, padding: CGFloat) -> (Int, Int) {
@@ -65,8 +66,12 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         return (0, 0)
     }
     
-    func placeAPiece(cor: (Int, Int)) {
-        
+    func placeAPiece(cor: (Int, Int), number n: Int) {
+        boardView.placeAPiece(cor, number: n)
+    }
+    
+    func updateAPiece(cor: (Int, Int), number n: Int) {
+        boardView.updateAPiece(cor, number: n)
     }
     
     // Drag up, then modify the model.
