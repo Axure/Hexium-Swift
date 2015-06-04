@@ -6,6 +6,7 @@ func hashPair(pair: (Int, Int)) -> Int {
     return ubound * (pair.0 + ubound + 1) + (pair.1 + ubound + 1)
 }
 
+// Write a unit test for it in the built-in test system.
 
 class CoordinateConverter: NSObject {
     

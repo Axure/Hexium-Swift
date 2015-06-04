@@ -10,10 +10,12 @@ import UIKit
 
 class HexiumGameController: UIViewController {
     var dimension: Int
+    var model: GameModel
     
     
     init(dimension d: Int) {
         dimension = d
+        model = GameModel(dimension: d)
         super.init(nibName: nil, bundle: nil)
         view.backgroundColor = UIColor.whiteColor()
         setupTapControls()
@@ -110,9 +112,13 @@ class HexiumGameController: UIViewController {
         
     }
     
+    func initView() {
+        
+    }
+    
     func sizeToCoordinate(radius: CGFloat, padding: CGFloat) -> (Int, Int) {
         
-        
+        return (0, 0)
     }
     
     // Drag up, then modify the model.
