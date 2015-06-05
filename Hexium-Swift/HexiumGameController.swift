@@ -16,7 +16,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     init(dimension d: Int) {
         dimension = d
 
-        boardView = BoardView(dimension: d, radius: 500)
+        boardView = BoardView(dimension: d, singleRadius: CGFloat(35))
         super.init(nibName: nil, bundle: nil)
         model = GameModel(dimension: d, delegate: self)
         view.backgroundColor = UIColor.whiteColor()
@@ -48,8 +48,8 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         NSLog("Height is %d", vcHeight)
         
         
-        let testTile = PieceView(position: CGPoint(x: 50, y: 50), width: CGFloat(200), radius: CGFloat(20), color: UIColor.redColor(), number: 5)
-        view.addSubview(testTile)
+//        let testTile = PieceView(position: CGPoint(x: 50, y: 50), radius: CGFloat(200), color: UIColor.redColor(), number: 5)
+//        view.addSubview(testTile)
         
 
         initView()
@@ -84,7 +84,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     
     @objc(tap:)
     func tapCommand(r: UIGestureRecognizer!) {
-        let location = r.locationInView(view)
+        let location = r.locationInView(boardView)
         
         println(location.x, location.y)
         println("Up!")

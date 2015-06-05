@@ -62,16 +62,23 @@ class PieceView : UIView {
         didSet {
             println("The number is \(oldValue)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             self.count.text = "\(number)"
-            if number > 3 {
+            switch (number) {
+            case -1:
+                color = UIColor.blackColor()
+            case 1:
+                color = UIColor.greenColor()
+            case 2:
+                color = UIColor.cyanColor()
+            case 3:
+                color = UIColor.yellowColor()
+            case 4:
                 color = UIColor.redColor()
-            } else {
-                if (number == -1) {
-                    println("-1!!!!!!!!!!!!!!!!!")
-                    color = UIColor.blackColor()
-                } else {
-                    color = UIColor.greenColor()
-                }
-
+            case 5:
+                color = UIColor.purpleColor()
+            case 6:
+                color = UIColor.brownColor()
+            default:
+                color = UIColor.clearColor()
             }
         }
     }
@@ -124,8 +131,8 @@ class PieceView : UIView {
         drawPolygon(context, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: CGRectGetWidth(rect)/2, sides: 6, color: color, offset: offset) // x and y is the top-left corner
     }
     
-    init (position : CGPoint, width : CGFloat, radius : CGFloat, color: UIColor, offset: CGFloat = 0, number: Int) {
-        
+    init (position : CGPoint, radius : CGFloat, color: UIColor, offset: CGFloat = 0, number: Int) {
+        // Radius has nothing to do...
         
 //        delegate = d;
 //        self.color = d.pieceColor(side)
@@ -135,8 +142,8 @@ class PieceView : UIView {
         
         self.offset = offset
         
-        let defaultFrame = CGRectMake(position.x - width, position.y - width, 2 * width, 2 * width)
-        let labelFrame = CGRectMake(width / CGFloat(2), width / CGFloat(2), width, width)
+        let defaultFrame = CGRectMake(position.x - radius, position.y - radius, 2 * radius, 2 * radius)
+        let labelFrame = CGRectMake(radius / CGFloat(2), radius / CGFloat(2), radius, radius)
         
 
         

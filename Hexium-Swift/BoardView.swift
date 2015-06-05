@@ -16,13 +16,16 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
     let dimension: Int
     var coordinateTable = [Int: CGPoint]()
     var viewTable = [Int: PieceView]()
+    let totalRadius: CGFloat
+    let singleRadius: CGFloat
     
-    init(dimension d: Int, radius r: CGFloat) {
+    init(dimension d: Int, singleRadius r: CGFloat) {
         self.dimension = d
+        self.singleRadius = r
+        self.totalRadius = r * CGFloat(2 * 2 * (d + 1))
         
         
-        
-        super.init(frame: CGRectMake(100, 100, 540, 540))
+        super.init(frame: CGRectMake(0, 0, totalRadius, totalRadius))
         self.backgroundColor = UIColor.clearColor()
         
         
@@ -31,9 +34,11 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         var a, b: Int
         var x, y: CGFloat
         var x1, x2, y1, y2: CGFloat
-        var size = CGFloat(20)
-        x = 200
-        y = 400
+        let backPiecePadding = CGFloat(1.5 / 15)
+        
+        var size = self.singleRadius
+        x = totalRadius / 2
+        y = totalRadius / 2
         var color: UIColor
         var position: CGPoint
         
@@ -64,16 +69,17 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
 
         // Load the background
         let offset = CGFloat(30)
-        newPiece = PieceView(position: CGPoint(x: x, y: y), width: size + 2, radius: size + 20.0, color: UIColor.blackColor(), offset: offset, number: -1)
-        newPiece.number = 2
+        // Add the piece in center
+        newPiece = PieceView(position: CGPoint(x: x, y: y), radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: -1)
         addSubview(newPiece)
+        // Add the pieces around it
         for i in 1...dimension {
             
             for j in 0...6 * i - 1 {
                 
 
-                newPiece = PieceView(position: coordinateTable[hashPair(i, j)]!, width: size + 2, radius: size + 20.0, color: UIColor.blackColor(), offset: offset, number: -1)
-                newPiece.number = 2
+                newPiece = PieceView(position: coordinateTable[hashPair(i, j)]!, radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: -1)
+//                newPiece.number = 2
                 addSubview(newPiece)
                 
                 
@@ -94,8 +100,8 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         //        var color: UIColor
         //        var position: CGPoint
         
-        let test2Tile = TileView(position: CGPoint(x: 150, y: 150), radius: CGFloat(200))
-        addSubview(test2Tile)
+//        let test2Tile = TileView(position: CGPoint(x: 150, y: 150), radius: CGFloat(200))
+//        addSubview(test2Tile)
         
 //        loadDemoView()
     }
@@ -133,7 +139,7 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
                 color = UIColor( red: r / 256.0, green: g / 256.0, blue: (256.0 - bb) / 256.0, alpha: CGFloat(1.0) )
                 
                 let offset = CGFloat(30)
-                newPiece = PieceView(position: position, width: size, radius: size, color: color, offset: offset, number: j)
+                newPiece = PieceView(position: position, radius: size, color: color, offset: offset, number: j)
                 newPiece.number = 5
                 addSubview(newPiece)
                 
@@ -149,12 +155,12 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
     
     func placeAPiece(location: (x: Int, y: Int), number n: Int) {
         var newPiece: PieceView
-        var size = CGFloat(20)
+        var size = self.singleRadius
         var color: UIColor
         color = UIColor.greenColor()
         let position = coordinateTable[hashPair(location)]
         let offset = CGFloat(30)
-        newPiece = PieceView(position: position!, width: size, radius: size, color: color, offset: offset, number: n)
+        newPiece = PieceView(position: position!, radius: size, color: color, offset: offset, number: n)
         newPiece.number = n
         addSubview(newPiece)
         viewTable[hashPair(location)] = newPiece
