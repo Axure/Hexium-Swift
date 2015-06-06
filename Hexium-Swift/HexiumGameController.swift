@@ -18,6 +18,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     var pieceBeingManipulated: PieceView?
     let coordinateConverter: CoordinateConverter
     var panBegin, panEnd: CGPoint?
+    var panSrc: (Int, Int)?
     var panNum: Int?
     
     init(dimension d: Int) {
@@ -192,8 +193,24 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         boardView.placeAPiece(cor, number: n)
     }
     
-    func moveAPiece(cor: (Int, Int)) {
-        
+    func startMoveAPiece(cor: (Int, Int)) {
+        pieceBeingManipulated = boardView.viewTable[hashPair(cor)]
+        if (pieceBeingManipulated !== nil) {
+            panBegin = pieceBeingManipulated!.center
+            //                panNum = model!.hexagonBoard[hashPair(coordinate)]
+        }
+    }
+    
+    func successMoveAPiece(src: (Int, Int), dest: (Int, Int)) {
+        pieceBeingManipulated?.removeFromSuperview()
+        boardView.viewTable[hashPair(src)] = nil
+
+        pieceBeingManipulated = nil
+        // View already placed view place a piece inside the model...
+    }
+    
+    func failMoveAPiece(src: (Int, Int)) {
+        pieceBeingManipulated!.center = panBegin!
     }
     
     func removeAPiece(cor: (Int, Int)) {
@@ -243,19 +260,22 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         switch (r.state) {
         case .Began:
             var coordinate = pointToCoordinate(location)
+            panSrc = coordinate
             println(coordinate)
             println("begins!")
-            pieceBeingManipulated = boardView.viewTable[hashPair(coordinate)]
-            if (pieceBeingManipulated !== nil) {
-                panBegin = pieceBeingManipulated!.center
-                panNum = model!.hexagonBoard[hashPair(coordinate)]
-                model?.moveAPiece(coordinate)
-            }
+            
+            model?.startMoveAPiece(coordinate)
+
+            
+            
         case .Changed:
             var translation = r.translationInView(boardView)
             if (pieceBeingManipulated != nil) {
                 println("hahahaha")
                 pieceBeingManipulated!.center = CGPointMake(panBegin!.x + translation.x, panBegin!.y + translation.y)
+                // Maybe we should not manipulate the view here directly...
+                // We should decouple it and move it to the view...
+                // But what is a view controller doing?
             }
 //            // move the view
 //        case .Cancelled:
@@ -264,10 +284,11 @@ class HexiumGameController: UIViewController, GameModelProtocol {
             if (pieceBeingManipulated != nil) {
                 panEnd = location
                 var coordinate = pointToCoordinate(location)
-                model?.removeAPiece(coordinate)
-                model?.placeAPiece(coordinate)
-                pieceBeingManipulated?.removeFromSuperview()
-                pieceBeingManipulated = nil // Destroy it..
+//                model?.removeAPiece(coordinate)
+                model?.endMoveAPiece(coordinate)
+//                model?.placeAPiece(coordinate)
+//                pieceBeingManipulated?.removeFromSuperview()
+//                pieceBeingManipulated = nil // Destroy it..
                 // place the view
             }
         default:

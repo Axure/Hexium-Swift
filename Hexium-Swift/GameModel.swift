@@ -12,7 +12,9 @@ protocol GameModelProtocol: class {
     func placeAPiece(cor: (Int, Int), number n: Int)
     func updateAPiece(cor: (Int, Int), number n: Int)
     func removeAPiece(cor: (Int, Int))
-    func moveAPiece(cor: (Int, Int))
+    func startMoveAPiece(cor: (Int, Int))
+    func successMoveAPiece(src: (Int, Int), dest: (Int, Int))
+    func failMoveAPiece(src: (Int, Int))
 }
 
 
@@ -23,6 +25,8 @@ class GameModel: NSObject {
     let coordinateConverter: CoordinateConverter
     
     let delegate: GameModelProtocol
+    
+    var pieceInMove: (Int, Int)?
     
     
     init (dimension d: Int, delegate dg: GameModelProtocol) {
@@ -62,7 +66,8 @@ class GameModel: NSObject {
     
     func placeAPiece(cor: (Int, Int)) {
         // if
-        if (hexagonBoard[hashPair(cor)] == -1) {
+        if (hexagonBoard[hashPair(cor)]! == -1) {
+            println("Model says at \(cor) is fucking \(hexagonBoard[hashPair(cor)])")
             hexagonBoard[hashPair(cor)] = 0
             increaseNear(cor)
             reauthCor(cor)
@@ -90,23 +95,43 @@ class GameModel: NSObject {
         if (hexagonBoard[hashPair(cor)] != -1) {
             hexagonBoard[hashPair(cor)] = -1
             decreaseNear(cor)
-            reauthCor(cor)
+
             delegate.removeAPiece(cor)
         } else {
             println("Model says already empty")
         }
     }
     
-    func moveAPiece(cor: (Int, Int)) {
+    func startMoveAPiece(cor: (Int, Int)) {
         if (hexagonBoard[hashPair(cor)] != -1) {
             hexagonBoard[hashPair(cor)] = -1
             decreaseNear(cor)
-            reauthCor(cor)
-            delegate.moveAPiece(cor)
+
+            delegate.startMoveAPiece(cor)
+            println("Model says _________ moving a piece")
+            pieceInMove = cor
         } else {
             println("Model says already empty")
         }
     }
+    
+    func endMoveAPiece(dest: (Int, Int)) {
+        if (hexagonBoard[hashPair(dest)] != -1) {
+
+            println("Model says target already take")
+            hexagonBoard[hashPair(pieceInMove!)] = 0
+            reauthCor(pieceInMove!)
+            increaseNear(pieceInMove!)
+            delegate.failMoveAPiece(pieceInMove!)
+            
+        } else {
+            placeAPiece(dest)
+            println("Model says succeed in moving a piece. Placing it!")
+            delegate.successMoveAPiece(pieceInMove!, dest: dest)
+        }
+        
+    }
+    
     
     func placeAPieceWithTwo(cor: (Int, Int)) {
         placeAPiece(coordinateConverter.twoToHex(cor))
