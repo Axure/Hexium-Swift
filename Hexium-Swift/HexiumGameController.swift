@@ -15,11 +15,15 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     let singleRadius = CGFloat(35)
     var coordinateTable = [Int: CGPoint]()
     let totalRadius: CGFloat
+    var pieceBeingManipulated: PieceView?
+    let coordinateConverter: CoordinateConverter
+    var panBegin, panEnd: CGPoint?
+    var panNum: Int?
     
     init(dimension d: Int) {
         self.dimension = d
         self.totalRadius = self.singleRadius * CGFloat(2 * 2 * (d + 1))
-
+        self.coordinateConverter = CoordinateConverter(dimension: d)
         boardView = BoardView(dimension: d, singleRadius: singleRadius)
         
         super.init(nibName: nil, bundle: nil)
@@ -45,9 +49,12 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     func setupTapControls() {
         
         
-        let tap = UITapGestureRecognizer(target: self, action: Selector("tap:"))
-        tap.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tap)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("tapRecognizer:"))
+        tapRecognizer.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tapRecognizer)
+        
+        var panRecognizer = UIPanGestureRecognizer(target:self, action: Selector("panRecognizer:"))
+        view.addGestureRecognizer(panRecognizer)
     }
     
     func setupGame() {
@@ -171,7 +178,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         println("Inner coordinates are \(innerX, innerY, absColumn)")
         // TODO: draw animations
         
-        return (column - row, -row)
+        return self.coordinateConverter.twoToHex((column - row, -row))
     }
     
     func myDistance(a: CGPoint, b: CGPoint) -> CGFloat {
@@ -185,6 +192,13 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         boardView.placeAPiece(cor, number: n)
     }
     
+    func moveAPiece(cor: (Int, Int)) {
+        
+    }
+    
+    func removeAPiece(cor: (Int, Int)) {
+        boardView.removeAPiece(cor)
+    }
     
     func updateAPiece(cor: (Int, Int), number n: Int) {
         boardView.updateAPiece(cor, number: n)
@@ -199,7 +213,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     // Judge the type of the action
     // Relative coordinate systems...
     
-    @objc(tap:)
+    @objc(tapRecognizer:)
     func tapCommand(r: UIGestureRecognizer!) {
         let location = r.locationInView(boardView)
         
@@ -208,7 +222,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         
         
         
-        model?.placeAPieceWithTwo(pointToCoordinate(location))
+        model?.placeAPiece(pointToCoordinate(location))
         println(pointToCoordinate(location))
 //        var selectedView = view.hitTest(location, withEvent: nil)
 //        if selectedView != nil {
@@ -219,5 +233,45 @@ class HexiumGameController: UIViewController, GameModelProtocol {
 //            
 //            
 //        }
+    }
+    
+    @objc(panRecognizer:)
+    func panCommand(r: UIPanGestureRecognizer!) {
+        let location = r.locationInView(boardView)
+
+        println(location.x, location.y)
+        switch (r.state) {
+        case .Began:
+            var coordinate = pointToCoordinate(location)
+            println(coordinate)
+            println("begins!")
+            pieceBeingManipulated = boardView.viewTable[hashPair(coordinate)]
+            if (pieceBeingManipulated !== nil) {
+                panBegin = pieceBeingManipulated!.center
+                panNum = model!.hexagonBoard[hashPair(coordinate)]
+                model?.moveAPiece(coordinate)
+            }
+        case .Changed:
+            var translation = r.translationInView(boardView)
+            if (pieceBeingManipulated != nil) {
+                println("hahahaha")
+                pieceBeingManipulated!.center = CGPointMake(panBegin!.x + translation.x, panBegin!.y + translation.y)
+            }
+//            // move the view
+//        case .Cancelled:
+            // restore the view
+        case .Ended:
+            if (pieceBeingManipulated != nil) {
+                panEnd = location
+                var coordinate = pointToCoordinate(location)
+                model?.removeAPiece(coordinate)
+                model?.placeAPiece(coordinate)
+                pieceBeingManipulated?.removeFromSuperview()
+                pieceBeingManipulated = nil // Destroy it..
+                // place the view
+            }
+        default:
+            println("going!")
+        }
     }
 }

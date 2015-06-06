@@ -150,12 +150,16 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
             println("Position out of range");
         } else {
             
-            if (viewTable[hashPair(location)] == nil) {
+            if (n < 0 || viewTable[hashPair(location)] == nil) {
                 let offset = CGFloat(30)
                 newPiece = PieceView(position: position!, radius: size, color: color, offset: offset, number: n, coordinate: location, isBackground: false)
                 newPiece.number = n
                 addSubview(newPiece)
-                viewTable[hashPair(location)] = newPiece
+                
+                if (n >= 0) {
+                    viewTable[hashPair(location)] = newPiece
+                }
+                
                 
                 UIView.animateWithDuration(0.5, animations: { () -> Void in
                     // Make the tile 'pop'
@@ -178,6 +182,15 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         
     }
 
+    func removeAPiece(cor: (Int, Int)) {
+        if viewTable[hashPair(cor)] != nil {
+            viewTable[hashPair(cor)]!.removeFromSuperview()
+            viewTable[hashPair(cor)] = nil
+        } else {
+            println("View says already empty")
+        }
+    }
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -11,6 +11,8 @@ import UIKit
 protocol GameModelProtocol: class {
     func placeAPiece(cor: (Int, Int), number n: Int)
     func updateAPiece(cor: (Int, Int), number n: Int)
+    func removeAPiece(cor: (Int, Int))
+    func moveAPiece(cor: (Int, Int))
 }
 
 
@@ -71,6 +73,41 @@ class GameModel: NSObject {
         
     }
     
+//    func placeAPieceWith(number n: Int, cor: (Int, Int)) {
+//        // if
+//        if (hexagonBoard[hashPair(cor)] == -1) {
+//            hexagonBoard[hashPair(cor)] = n
+//            increaseNear(cor)
+//            reauthCor(cor)
+//            delegate.placeAPiece(cor, number: hexagonBoard[hashPair(cor)]!)
+//        } else {
+//            println("Model says position taken")
+//        }
+//        
+//    }
+    
+    func removeAPiece(cor: (Int, Int)) {
+        if (hexagonBoard[hashPair(cor)] != -1) {
+            hexagonBoard[hashPair(cor)] = -1
+            decreaseNear(cor)
+            reauthCor(cor)
+            delegate.removeAPiece(cor)
+        } else {
+            println("Model says already empty")
+        }
+    }
+    
+    func moveAPiece(cor: (Int, Int)) {
+        if (hexagonBoard[hashPair(cor)] != -1) {
+            hexagonBoard[hashPair(cor)] = -1
+            decreaseNear(cor)
+            reauthCor(cor)
+            delegate.moveAPiece(cor)
+        } else {
+            println("Model says already empty")
+        }
+    }
+    
     func placeAPieceWithTwo(cor: (Int, Int)) {
         placeAPiece(coordinateConverter.twoToHex(cor))
     }
@@ -113,6 +150,5 @@ class GameModel: NSObject {
             }
         }
     }
-    
     
 }
