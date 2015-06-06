@@ -47,7 +47,12 @@ class CoordinateConverter: NSObject {
     
     func hexToTwo(cor: (x: Int, y: Int)) -> (Int, Int) {
         println("Hex to two with \(cor)")
-        return reverseIndex[hashPair(cor)]!
+        if (reverseIndex[hashPair(cor)] != nil) {
+            return reverseIndex[hashPair(cor)]!
+        } else {
+            return (-1, -1)
+        }
+
         
     }
     

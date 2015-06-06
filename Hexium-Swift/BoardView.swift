@@ -146,16 +146,28 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         var color: UIColor
         color = UIColor.greenColor()
         let position = coordinateTable[hashPair(location)]
-        let offset = CGFloat(30)
-        newPiece = PieceView(position: position!, radius: size, color: color, offset: offset, number: n, coordinate: location, isBackground: false)
-        newPiece.number = n
-        addSubview(newPiece)
-        viewTable[hashPair(location)] = newPiece
+        if (position == nil) {
+            println("Position out of range");
+        } else {
+            
+            if (viewTable[hashPair(location)] == nil) {
+                let offset = CGFloat(30)
+                newPiece = PieceView(position: position!, radius: size, color: color, offset: offset, number: n, coordinate: location, isBackground: false)
+                newPiece.number = n
+                addSubview(newPiece)
+                viewTable[hashPair(location)] = newPiece
+                
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    // Make the tile 'pop'
+                    newPiece.layer.setAffineTransform(CGAffineTransformMakeScale(1.2, 1.2))
+                })
+            } else {
+                println("Location taken!")
+            }
+            
+            
+        }
         
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            // Make the tile 'pop'
-            newPiece.layer.setAffineTransform(CGAffineTransformMakeScale(1.2, 1.2))
-            })
     }
     
     func updateAPiece(location: (x: Int, y: Int), number n: Int) {

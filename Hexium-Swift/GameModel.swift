@@ -26,7 +26,7 @@ class GameModel: NSObject {
     init (dimension d: Int, delegate dg: GameModelProtocol) {
         self.dimension = d
         self.delegate = dg
-        hexagonBoard[hashPair((0, 0))] = 0
+        hexagonBoard[hashPair((0, 0))] = -1
         for i in 1...self.dimension {
             for j in 0..<6 * i {
                 hexagonBoard[hashPair((i, j))] = -1
@@ -60,10 +60,15 @@ class GameModel: NSObject {
     
     func placeAPiece(cor: (Int, Int)) {
         // if
-        hexagonBoard[hashPair(cor)] = 0
-        increaseNear(cor)
-        reauthCor(cor)
-        delegate.placeAPiece(cor, number: hexagonBoard[hashPair(cor)]!)
+        if (hexagonBoard[hashPair(cor)] == -1) {
+            hexagonBoard[hashPair(cor)] = 0
+            increaseNear(cor)
+            reauthCor(cor)
+            delegate.placeAPiece(cor, number: hexagonBoard[hashPair(cor)]!)
+        } else {
+            println("Model says position taken")
+        }
+        
     }
     
     func placeAPieceWithTwo(cor: (Int, Int)) {
