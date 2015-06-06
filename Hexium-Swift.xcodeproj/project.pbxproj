@@ -132,8 +132,8 @@
 		04289B881B1C76E000BAB4A1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				04289B891B1C76E900BAB4A1 /* PieceView.swift */,
 				04289B911B1C797F00BAB4A1 /* BoardView.swift */,
+				04289B891B1C76E900BAB4A1 /* PieceView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";

@@ -11,53 +11,14 @@ import Foundation
 import UIKit
 
 
-//class PieceView : UIView {
-//
-//
-//
-//    var delegate : AppearanceProviderProtocol
-//    var side: Side = Side.Black {
-//        didSet {
-//            backgroundColor = delegate.pieceColor(side)
-//        }
-//        // Understanding and applying such kind of codes
-//    }
-//
-//    required init(coder: NSCoder) {
-//        fatalError("NSCoding not supported")
-//    }
-//
-//    init (position : CGPoint, width : CGFloat, side : Side, radius : CGFloat, delegate d : AppearanceProviderProtocol) {
-//
-//        delegate = d;
-//
-//        switch(side) {
-//        case Side.Black:
-//            super.init(frame: CGRectMake(position.x, position.y, width, width));
-//
-//        case Side.White:
-////            super.init(frame: CGRectMake(position.x + width/4, position.y + width/4, width/2, width/2));
-//            super.init(frame: CircleView(CGRectMake(position.x + width/4, position.y + width/4, width/2, width/2), color: UIColor.clearColor()))
-//
-//        }
-//
-//        // Maybe we need to write a class for the circle inherited from a rectangle and override the CGRectMake method?
-//
-//
-//        self.side = side
-//        backgroundColor = delegate.pieceColor(side)
-//        println(backgroundColor)
-//
-//    }
-//
-//}
-
 class PieceView : UIView {
     
     // How to inherit from two different classes and choose the respective ones to run? In other words, how to merge to classes with an option to switch?
     var color : UIColor
     var offset: CGFloat
     var count: UILabel
+    var cor: (Int, Int)
+    let isBackground: Bool
     var number: Int {
         didSet {
             println("The number is \(oldValue)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -109,6 +70,14 @@ class PieceView : UIView {
         return points
     }
     
+    func drawCircle(context: CGContextRef, x: CGFloat, y: CGFloat,
+        radius: CGFloat, sides: Int, color: UIColor, offset: CGFloat) {
+            let context = UIGraphicsGetCurrentContext()
+            color.set()
+            CGContextAddArc(context, x, y, radius, 0.0, degreeToRadian(CGFloat(360)), 1)
+            CGContextStrokePath(context);
+    }
+    
     func drawPolygon(context: CGContextRef, x: CGFloat, y: CGFloat,
         radius: CGFloat, sides: Int, color: UIColor, offset: CGFloat) {
             
@@ -128,10 +97,14 @@ class PieceView : UIView {
         let angleOff = 0
         let xOffSet = CGFloat(300)
         var context = UIGraphicsGetCurrentContext()
+        if (number >= 0) {
+            drawCircle(context, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: CGRectGetWidth(rect)/2, sides: 6, color: color, offset: offset)
+        }
         drawPolygon(context, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: CGRectGetWidth(rect)/2, sides: 6, color: color, offset: offset) // x and y is the top-left corner
+        
     }
     
-    init (position : CGPoint, radius : CGFloat, color: UIColor, offset: CGFloat = 0, number: Int) {
+    init (position : CGPoint, radius : CGFloat, color: UIColor, offset: CGFloat = 0, number: Int, coordinate: (Int, Int), isBackground: Bool) {
         // Radius has nothing to do...
         
 //        delegate = d;
@@ -145,12 +118,14 @@ class PieceView : UIView {
         let defaultFrame = CGRectMake(position.x - radius, position.y - radius, 2 * radius, 2 * radius)
         let labelFrame = CGRectMake(radius / CGFloat(2), radius / CGFloat(2), radius, radius)
         
+        self.cor = coordinate
+        self.isBackground = isBackground
 
         
         
         self.count = UILabel(frame: labelFrame)
+        self.count.textAlignment = .Center
         self.number = number
-        println("The initialized number is \(self.number)^^^^^^^^^^^^^^^^^^^")
         
         super.init(frame: defaultFrame)
 //        super.init(frame: CGRectMake(position.x, position.y, width, width))

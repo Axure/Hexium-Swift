@@ -70,7 +70,7 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         // Load the background
         let offset = CGFloat(30)
         // Add the piece in center
-        newPiece = PieceView(position: CGPoint(x: x, y: y), radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: -1)
+        newPiece = PieceView(position: CGPoint(x: x, y: y), radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: -1, coordinate: (0, 0), isBackground: true)
         addSubview(newPiece)
         // Add the pieces around it
         for i in 1...dimension {
@@ -78,27 +78,13 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
             for j in 0...6 * i - 1 {
                 
 
-                newPiece = PieceView(position: coordinateTable[hashPair(i, j)]!, radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: -1)
+                newPiece = PieceView(position: coordinateTable[hashPair(i, j)]!, radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: -1, coordinate: (i, j), isBackground: true)
 //                newPiece.number = 2
                 addSubview(newPiece)
                 
                 
             }
         }
-        
-        
-
-        
-        //        var newPiece: PieceView
-        //        var r, g, bb: CGFloat
-        //        var a, b: Int
-        //        var x, y: CGFloat
-        //        var x1, x2, y1, y2: CGFloat
-        //        var size = CGFloat(20)
-        //        x = 200
-        //        y = 400
-        //        var color: UIColor
-        //        var position: CGPoint
         
 //        let test2Tile = TileView(position: CGPoint(x: 150, y: 150), radius: CGFloat(200))
 //        addSubview(test2Tile)
@@ -139,7 +125,7 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
                 color = UIColor( red: r / 256.0, green: g / 256.0, blue: (256.0 - bb) / 256.0, alpha: CGFloat(1.0) )
                 
                 let offset = CGFloat(30)
-                newPiece = PieceView(position: position, radius: size, color: color, offset: offset, number: j)
+                newPiece = PieceView(position: position, radius: size, color: color, offset: offset, number: j, coordinate: (i, j), isBackground: false)
                 newPiece.number = 5
                 addSubview(newPiece)
                 
@@ -152,6 +138,7 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
     func dragAPiece(location: (x: Int, y: Int)) {
         
     }
+
     
     func placeAPiece(location: (x: Int, y: Int), number n: Int) {
         var newPiece: PieceView
@@ -160,10 +147,15 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         color = UIColor.greenColor()
         let position = coordinateTable[hashPair(location)]
         let offset = CGFloat(30)
-        newPiece = PieceView(position: position!, radius: size, color: color, offset: offset, number: n)
+        newPiece = PieceView(position: position!, radius: size, color: color, offset: offset, number: n, coordinate: location, isBackground: false)
         newPiece.number = n
         addSubview(newPiece)
         viewTable[hashPair(location)] = newPiece
+        
+        UIView.animateWithDuration(5, animations: { () -> Void in
+            // Make the tile 'pop'
+            newPiece.layer.setAffineTransform(CGAffineTransformMakeScale(2, 2))
+            })
     }
     
     func updateAPiece(location: (x: Int, y: Int), number n: Int) {

@@ -27,7 +27,7 @@ class GameModel: NSObject {
         self.dimension = d
         self.delegate = dg
         hexagonBoard[hashPair((0, 0))] = 0
-        for i in 0...self.dimension {
+        for i in 1...self.dimension {
             for j in 0..<6 * i {
                 hexagonBoard[hashPair((i, j))] = -1
             }
@@ -64,6 +64,10 @@ class GameModel: NSObject {
         increaseNear(cor)
         reauthCor(cor)
         delegate.placeAPiece(cor, number: hexagonBoard[hashPair(cor)]!)
+    }
+    
+    func placeAPieceWithTwo(cor: (Int, Int)) {
+        placeAPiece(coordinateConverter.twoToHex(cor))
     }
     
     
