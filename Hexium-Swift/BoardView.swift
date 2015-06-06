@@ -152,9 +152,9 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         addSubview(newPiece)
         viewTable[hashPair(location)] = newPiece
         
-        UIView.animateWithDuration(5, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
             // Make the tile 'pop'
-            newPiece.layer.setAffineTransform(CGAffineTransformMakeScale(2, 2))
+            newPiece.layer.setAffineTransform(CGAffineTransformMakeScale(1.2, 1.2))
             })
     }
     

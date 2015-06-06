@@ -171,7 +171,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         println("Inner coordinates are \(innerX, innerY, absColumn)")
         // TODO: draw animations
         
-        return (column, -row)
+        return (column - row, -row)
     }
     
     func myDistance(a: CGPoint, b: CGPoint) -> CGFloat {
@@ -208,7 +208,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         
         
         
-//        model?.placeAPieceWithTwo(pointToCoordinate(location))
+        model?.placeAPieceWithTwo(pointToCoordinate(location))
         println(pointToCoordinate(location))
 //        var selectedView = view.hitTest(location, withEvent: nil)
 //        if selectedView != nil {

@@ -39,8 +39,9 @@ class PieceView : UIView {
             case 6:
                 color = UIColor.brownColor()
             default:
-                color = UIColor.clearColor()
+                color = UIColor.whiteColor()
             }
+            self.setNeedsDisplay()
         }
     }
 
