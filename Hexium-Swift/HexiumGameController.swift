@@ -159,12 +159,12 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         let k = sqrt(CGFloat(1.0 / 3))
 //         On the left corner
         println("The two differences are \(innerY - ((CGFloat(k) * innerX) + 2 * singleRadius / sqrt(CGFloat(3))), innerY - ((CGFloat(-k) * innerX) + 2 * singleRadius / sqrt(CGFloat(3))))")
-        if (innerY > (CGFloat(k) * innerX) + 2 * singleRadius / sqrt(CGFloat(3))) {
+        if (innerY > (CGFloat(k) * innerX) + 2 * singleRadius / sqrt(CGFloat(3)) && innerX < 0) {
             row--
             column--
         }
         // On the right corner
-        if (innerY > (CGFloat(-k) * innerX) + 2 * singleRadius / sqrt(CGFloat(3))) {
+        if (innerY > (CGFloat(-k) * innerX) + 2 * singleRadius / sqrt(CGFloat(3)) && innerX >= 0) {
             row--
         }
         
