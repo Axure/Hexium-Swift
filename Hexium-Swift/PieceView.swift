@@ -19,27 +19,36 @@ class PieceView : UIView {
     var count: UILabel
     var cor: (Int, Int)
     let isBackground: Bool
-    var number: Int {
+    var number: ModelPoint {
         didSet {
             println("The number is \(oldValue)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            self.count.text = "\(number)"
-            switch (number) {
-            case -1:
-                color = UIColor.blackColor()
-            case 1:
+            self.count.text = "\(number.expected)"
+//            switch (number) {
+//            case -1:
+//                color = UIColor.blackColor()
+//            case 1:
+//                color = UIColor.greenColor()
+//            case 2:
+//                color = UIColor.cyanColor()
+//            case 3:
+//                color = UIColor.yellowColor()
+//            case 4:
+//                color = UIColor.redColor()
+//            case 5:
+//                color = UIColor.purpleColor()
+//            case 6:
+//                color = UIColor.brownColor()
+//            default:
+//                color = UIColor.whiteColor()
+//            }
+            if (number.expected > number.actual) {
                 color = UIColor.greenColor()
-            case 2:
-                color = UIColor.cyanColor()
-            case 3:
-                color = UIColor.yellowColor()
-            case 4:
-                color = UIColor.redColor()
-            case 5:
-                color = UIColor.purpleColor()
-            case 6:
-                color = UIColor.brownColor()
-            default:
-                color = UIColor.whiteColor()
+            } else {
+                if (number.expected < number.actual) {
+                    color = UIColor.redColor()
+                } else {
+                    color = UIColor.yellowColor()
+                }
             }
             self.setNeedsDisplay()
         }
@@ -98,14 +107,14 @@ class PieceView : UIView {
         let angleOff = 0
         let xOffSet = CGFloat(300)
         var context = UIGraphicsGetCurrentContext()
-        if (number >= 0) {
+        if (number.expected >= 0) {
             drawCircle(context, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: CGRectGetWidth(rect)/2, sides: 6, color: color, offset: offset)
         }
         drawPolygon(context, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: CGRectGetWidth(rect)/2, sides: 6, color: color, offset: offset) // x and y is the top-left corner
         
     }
     
-    init (position : CGPoint, radius : CGFloat, color: UIColor, offset: CGFloat = 0, number: Int, coordinate: (Int, Int), isBackground: Bool) {
+    init (position : CGPoint, radius : CGFloat, color: UIColor, offset: CGFloat = 0, number: ModelPoint, coordinate: (Int, Int), isBackground: Bool) {
         // Radius has nothing to do...
         
 //        delegate = d;
@@ -130,7 +139,7 @@ class PieceView : UIView {
         
         super.init(frame: defaultFrame)
 //        super.init(frame: CGRectMake(position.x, position.y, width, width))
-        if (number != -1) {
+        if (number.expected != -1) {
             self.addSubview(self.count)
         }
         // Maybe we need to write a class for the circle inherited from a rectangle and override the CGRectMake method?

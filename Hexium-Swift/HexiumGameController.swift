@@ -188,7 +188,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         return sqrt(distX * distX + distY * distY)
     }
     
-    func placeAPiece(cor: (Int, Int), number n: Int) {
+    func placeAPiece(cor: (Int, Int), number n: ModelPoint) {
 
         boardView.placeAPiece(cor, number: n)
     }
@@ -217,7 +217,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         boardView.removeAPiece(cor)
     }
     
-    func updateAPiece(cor: (Int, Int), number n: Int) {
+    func updateAPiece(cor: (Int, Int), number n: ModelPoint) {
         boardView.updateAPiece(cor, number: n)
     }
     
@@ -239,7 +239,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
         
         
         
-        model?.placeAPiece(pointToCoordinate(location))
+        model?.placeAPiece(pointToCoordinate(location), expected: 4)
         println(pointToCoordinate(location))
 //        var selectedView = view.hitTest(location, withEvent: nil)
 //        if selectedView != nil {

@@ -70,7 +70,8 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         // Load the background
         let offset = CGFloat(30)
         // Add the piece in center
-        newPiece = PieceView(position: CGPoint(x: x, y: y), radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: -1, coordinate: (0, 0), isBackground: true)
+        
+        newPiece = PieceView(position: CGPoint(x: x, y: y), radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: ModelPoint(expected: -1, actual: -1), coordinate: (0, 0), isBackground: true)
         addSubview(newPiece)
         // Add the pieces around it
         for i in 1...dimension {
@@ -78,7 +79,7 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
             for j in 0...6 * i - 1 {
                 
 
-                newPiece = PieceView(position: coordinateTable[hashPair(i, j)]!, radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: -1, coordinate: (i, j), isBackground: true)
+                newPiece = PieceView(position: coordinateTable[hashPair(i, j)]!, radius: size * (1 + backPiecePadding), color: UIColor.blackColor(), offset: offset, number: ModelPoint(expected: -1, actual: -1), coordinate: (i, j), isBackground: true)
 //                newPiece.number = 2
                 addSubview(newPiece)
                 
@@ -125,8 +126,8 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
                 color = UIColor( red: r / 256.0, green: g / 256.0, blue: (256.0 - bb) / 256.0, alpha: CGFloat(1.0) )
                 
                 let offset = CGFloat(30)
-                newPiece = PieceView(position: position, radius: size, color: color, offset: offset, number: j, coordinate: (i, j), isBackground: false)
-                newPiece.number = 5
+                newPiece = PieceView(position: position, radius: size, color: color, offset: offset, number: ModelPoint(expected: j, actual: j), coordinate: (i, j), isBackground: false)
+                newPiece.number = ModelPoint(expected: 5, actual: 5)
                 addSubview(newPiece)
                 
                 println("New piece is at \(position) with color \(color)")
@@ -140,7 +141,7 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
     }
 
     
-    func placeAPiece(location: (x: Int, y: Int), number n: Int) {
+    func placeAPiece(location: (x: Int, y: Int), number n: ModelPoint) {
         var newPiece: PieceView
         var size = self.singleRadius
         var color: UIColor
@@ -150,13 +151,13 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
             println("Position out of range");
         } else {
             
-            if (n < 0 || viewTable[hashPair(location)] == nil) {
+            if (n.expected < 0 || viewTable[hashPair(location)] == nil) {
                 let offset = CGFloat(30)
                 newPiece = PieceView(position: position!, radius: size, color: color, offset: offset, number: n, coordinate: location, isBackground: false)
                 newPiece.number = n
                 addSubview(newPiece)
                 
-                if (n >= 0) {
+                if (n.expected >= 0) {
                     viewTable[hashPair(location)] = newPiece
                 }
                 
@@ -174,7 +175,7 @@ class BoardView: UIView, BoardViewProtocol { // The board view should wrap the p
         
     }
     
-    func updateAPiece(location: (x: Int, y: Int), number n: Int) {
+    func updateAPiece(location: (x: Int, y: Int), number n: ModelPoint) {
 //        var piece: PieceView
         if viewTable[hashPair(location)] != nil {
             viewTable[hashPair(location)]!.number = n
