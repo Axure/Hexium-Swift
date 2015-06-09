@@ -12,7 +12,7 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     var dimension: Int
     var model: GameModel? // Use optional to resolve the problem that model must be initialized before super.init, but self must be used after super.init...
     var boardView: BoardView
-    let singleRadius = CGFloat(35)
+    let singleRadius = CGFloat(15)
     var coordinateTable = [Int: CGPoint]()
     let totalRadius: CGFloat
     var pieceBeingManipulated: PieceView?

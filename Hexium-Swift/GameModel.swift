@@ -68,7 +68,8 @@ class GameModel: NSObject {
         }
         self.coordinateConverter = CoordinateConverter(dimension: d)
         super.init()
-        randomStart()
+//        randomStart()
+        trueStart(number: 5)
         
     }
     
@@ -213,4 +214,79 @@ class GameModel: NSObject {
         }
     }
     
+    func hasWon() -> Bool {
+        for (cor, modelPoint) in hexagonBoard {
+            if modelPoint.expected != modelPoint.actual {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    func trueStart(number n: Int) {
+        randomStart()
+        rematch()
+        randomMove(times: 500)
+    }
+    
+    func rematch() {
+        for (cor, modelPoint) in self.hexagonBoard {
+//            modelPoint.expected = modelPoint.actual
+            if hexagonBoard[cor]?.expected != -1 {
+                hexagonBoard[cor]?.expected = modelPoint.actual
+                delegate.updateAPiece(revHashPair(cor), number: hexagonBoard[cor]!)
+                println("Fucking!")
+            }
+
+        }
+    }
+    // TODO: more parameters. More decoupled...
+    func randomMove(times t: Int) {
+        var randomTakenCorMap = [Int: Int]()
+        var randomAllCorMap = [Int: Int]()
+        var i, j: Int
+        (i, j) = (0, 0)
+        
+        for (cor, modelPoint) in self.hexagonBoard {
+            randomAllCorMap[i] = cor
+            ++i
+            if (modelPoint.expected != -1) {
+                randomTakenCorMap[j] = cor
+                ++j
+            }
+        }
+        var times = t
+        let allSize = randomAllCorMap.count
+        let takenSize = randomTakenCorMap.count
+        
+        var a, b: (Int, Int)
+        var randomA, randomB: Int
+        while (times > 0) {
+            randomA = random() % takenSize
+            randomB = random() % allSize
+            
+            a = revHashPair(randomTakenCorMap[randomA]!)
+            b = revHashPair(randomAllCorMap[randomB]!)
+            if (moveAToB(a, b: b)) {
+                randomTakenCorMap[randomA] = hashPair(b)
+                --times
+            }
+        }
+        
+    } // How to solve the indice dilemma?
+    
+    func moveAToB(a: (Int, Int), b: (Int, Int)) -> Bool { // Return if successful
+        if hexagonBoard[hashPair(b)] == nil {
+            return false
+        } else {
+            if hexagonBoard[hashPair(b)]!.expected == -1 {
+                placeAPiece(b, expected: hexagonBoard[hashPair(a)]!.expected)
+                removeAPiece(a)
+                return true
+            } else {
+                return false
+            }
+        }
+    }
 }
