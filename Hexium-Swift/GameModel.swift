@@ -66,15 +66,20 @@ class GameModel: NSObject {
     
     func placeAPiece(cor: (Int, Int)) {
         // if
-        if (hexagonBoard[hashPair(cor)]! == -1) {
-            println("Model says at \(cor) is fucking \(hexagonBoard[hashPair(cor)])")
-            hexagonBoard[hashPair(cor)] = 0
-            increaseNear(cor)
-            reauthCor(cor)
-            delegate.placeAPiece(cor, number: hexagonBoard[hashPair(cor)]!)
+        if ( (cor.0 <= dimension) && ( (cor.1 == 0) || (cor.1 < 6 * cor.0) ) ) {
+            if (hexagonBoard[hashPair(cor)]! == -1) {
+                println("Model says at \(cor) is fucking \(hexagonBoard[hashPair(cor)])")
+                hexagonBoard[hashPair(cor)] = 0
+                increaseNear(cor)
+                reauthCor(cor)
+                delegate.placeAPiece(cor, number: hexagonBoard[hashPair(cor)]!)
+            } else {
+                println("Model says position taken")
+            }
         } else {
-            println("Model says position taken")
+            println("Place out of range!")
         }
+        
         
     }
     
