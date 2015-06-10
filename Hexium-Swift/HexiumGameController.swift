@@ -50,9 +50,9 @@ class HexiumGameController: UIViewController, GameModelProtocol {
     func setupTapControls() {
         
         
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("tapRecognizer:"))
-        tapRecognizer.numberOfTapsRequired = 1
-        view.addGestureRecognizer(tapRecognizer)
+//        let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector("tapRecognizer:"))
+//        tapRecognizer.numberOfTapsRequired = 1
+//        view.addGestureRecognizer(tapRecognizer)
         
         var panRecognizer = UIPanGestureRecognizer(target:self, action: Selector("panRecognizer:"))
         view.addGestureRecognizer(panRecognizer)

@@ -160,9 +160,10 @@ class GameModel: NSObject {
             delegate.failMoveAPiece(pieceInMove!)
             
         } else {
+            delegate.successMoveAPiece(pieceInMove!, dest: dest)
             placeAPiece(dest, expected: pieceInMoveExpected!)
             println("Model says succeed in moving a piece. Placing it!")
-            delegate.successMoveAPiece(pieceInMove!, dest: dest)
+
         }
         
     }
